@@ -15,4 +15,5 @@ const modSalario = (value) => {
     return result
 }
 
+
 salario(2650)
