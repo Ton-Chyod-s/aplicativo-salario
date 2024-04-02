@@ -5,6 +5,12 @@ export default function App() {
   const [valor, setValor] = useState("");
   const [resultado, setResultado] = useState("");
 
+  const salario =  (value) => {
+      fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
+          console.log(data)
+      }))
+  }
+
   function Imprimir(){
     return setResultado(`Você digitou ${valor}`);
   }
