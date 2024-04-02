@@ -6,9 +6,11 @@ export default function App() {
   const [resultado, setResultado] = useState("");
 
   const salario =  (value) => {
-      fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
+      const result = fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
           console.log(data)
+          return data
       }))
+      return result
   }
 
   function Imprimir(){
