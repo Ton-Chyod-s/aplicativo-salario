@@ -1,14 +1,18 @@
 
 const salario =  (value) => {
-    fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
+    const result = fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
         console.log(data)
+        return data
     }))
+    return result
 }
 
 const modSalario = (value) => {
-    fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
+    const result = fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
         console.log(data)
+        return data
     }))
+    return result
 }
 
-salario(6650)
+salario(2650)
