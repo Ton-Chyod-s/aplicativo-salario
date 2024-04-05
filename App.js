@@ -4,17 +4,17 @@ import { useState } from 'react'
 export default function App() {
   const [valor, setValor] = useState("");
   const [resultado, setResultado] = useState("");
-
+  let lol = []
   const salario =  (value) => {
       const result = fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
-          console.log(data)
+          lol = data
           return data
       }))
       return result
   }
-
+  salario(2650)
   function Imprimir(){
-    return setResultado(`Você digitou ${valor}`);
+    return setResultado(`Você digitou ${lol}`);
   }
 
   function Limpar() {
