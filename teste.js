@@ -20,12 +20,12 @@ const modSalario = (value) => {
 // salario(2640)
 
 
-const resSalario =  async (value) => {
-    let data = []
-    const result = await fetch(`https://api-salario.cyclic.app/salario/${value}`)
-    const responseData = await result.json()
-    data = responseData?.results
-    return data
+async function Imprimir(value){
+    fetch(`https://api-salario.cyclic.app/salario/${value}`)
+    .then(res => res.json())
+    .then(data => {
+        const val = valor
+    })
 }
 
-console.log(resSalario(2640))
+Imprimir(2640)

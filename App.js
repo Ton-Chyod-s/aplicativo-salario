@@ -4,21 +4,23 @@ import { useState } from 'react'
 export default function App() {
   const [valor, setValor] = useState("");
   const [resultado, setResultado] = useState("");
-  let lol = []
-  const salario =  (value) => {
-      const result = fetch(`https://api-salario.cyclic.app/salario/${value}`).then((res) => res.json().then((data) => {
-          lol = data
-          return data
-      }))
-      return result
-  }
-  salario(2650)
-  function Imprimir(){
-    return setResultado(`Você digitou ${lol}`);
+  const [resultado1, setResultado1] = useState("");
+  const [resultado2, setResultado2] = useState("");
+  const [resultado3, setResultado3] = useState("");
+
+  async function Imprimir(){
+    fetch(`https://api-salario.cyclic.app/salario/${valor}`)
+    .then(res => res.json())
+    .then(data => {
+      setResultado(data['Despesas'])
+      setResultado1(data['Investimento'])
+      setResultado2(data['Fundo Emergencial'])
+      setResultado3(data['Pode gastar'])
+    })
   }
 
   function Limpar() {
-    return setResultado("") & setValor("")
+    return setValor("")
   }
 
   return (
@@ -38,7 +40,7 @@ export default function App() {
 
       <View>
         <Text style={styles.texto}>Resultado: </Text>
-        <Text > {resultado}</Text>
+        <Text >Despesas: {resultado}{'\n'}Investimentos: {resultado1}{'\n'}Fundo Emergencial: {resultado2}{'\n'}Pode gastar a toa: {resultado3}</Text>
       </View>
 
     </View>
