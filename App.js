@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react'
+import codePush from 'react-native-code-push';
 
-export default function App() {
+function App() {
   const [valor, setValor] = useState("");
   const [resultado, setResultado] = useState("");
   const [resultado1, setResultado1] = useState("");
@@ -46,6 +47,8 @@ export default function App() {
     </View>
   );
 }
+
+export default codePush(App);
 
 const styles = StyleSheet.create({
   container: {
