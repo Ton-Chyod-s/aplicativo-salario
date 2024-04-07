@@ -48,7 +48,9 @@ function App() {
   );
 }
 
-export default codePush(App);
+export default codePush({
+  deploymentKey: "fWDFYvHaJ5l6qy33M2ywgNEFxWmOe2EdbkwJW",
+})(App);
 
 const styles = StyleSheet.create({
   container: {
