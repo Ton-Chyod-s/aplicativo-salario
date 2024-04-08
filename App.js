@@ -56,7 +56,6 @@ export default function App() {
         <Text style={styles.texto}>Resultado: </Text>
         <Text style={styles.texto_resposta} >Despesas: {resultado}{'\n'}Investimentos: {resultado1}{'\n'}Fundo Emergêncial: {resultado2}{'\n'}Pode gastar à toa: {resultado3}</Text>
       </View>
-
     </View>
   );
 }
@@ -90,4 +89,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
