@@ -40,9 +40,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.grafico}>
       <VictoryPie
         height={250}
-        colorScale={["tomato", "orange", "gold", "cyan", "navy" ]}
+        colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED" ]}
         data={[
           { x: "Despesas", y: resultado },
           { x: "Investimentos", y: resultado1 },
@@ -50,6 +51,7 @@ export default function App() {
           { x: "Pode gastar à toa", y: resultado3}
         ]}
       />
+      </View>
 
       <Text style={styles.texto}> Salário: </Text>
     
@@ -74,7 +76,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: .7,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -100,4 +102,7 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontWeight: 'bold',
   },
+  grafico: {
+    
+  }
 });
