@@ -41,6 +41,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <VictoryPie
+        height={250}
         colorScale={["tomato", "orange", "gold", "cyan", "navy" ]}
         data={[
           { x: "Despesas", y: resultado },
