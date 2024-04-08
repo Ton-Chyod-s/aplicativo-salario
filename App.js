@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react'
 import { Updates } from 'expo';
+import { VictoryPie } from 'victory-native';
 
 /*
 // Verifica se há atualizações disponíveis ao iniciar o aplicativo
@@ -39,6 +40,16 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <VictoryPie
+        colorScale={["tomato", "orange", "gold", "cyan", "navy" ]}
+        data={[
+          { x: "Despesas", y: resultado },
+          { x: "Investimentos", y: resultado1 },
+          { x: "Fundo Emergêncial", y: resultado2 },
+          { x: "Pode gastar à toa", y: resultado3}
+        ]}
+      />
+
       <Text style={styles.texto}> Salário: </Text>
     
       <TextInput value={valor} onChangeText={setValor} placeholder='Digite o valor!'/>
