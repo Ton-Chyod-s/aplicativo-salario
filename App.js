@@ -1,5 +1,19 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react'
+import { Updates } from 'expo';
+
+/*
+// Verifica se há atualizações disponíveis ao iniciar o aplicativo
+async function checkForUpdate() {
+  const update = await Updates.checkForUpdateAsync();
+  if (update.isAvailable) {
+    await Updates.fetchUpdateAsync();
+    // Se necessário, você pode adicionar um aviso ao usuário sobre a atualização
+    await Updates.reloadAsync();
+  }
+}
+
+checkForUpdate(); */
 
 export default function App() {
   const [valor, setValor] = useState("");
@@ -76,3 +90,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
