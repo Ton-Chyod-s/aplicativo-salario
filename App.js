@@ -34,19 +34,21 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.graficoContainer}>
-        <VictoryPie
-          style={styles.grafico}
-          height={100}
-          colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
-          data={data}
-        />
-        <VictoryLegend
-          height={150}
-          style={styles.legenda}
-          colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
-          data={data.map(item => ({ name: item.x }))}
-          labelComponent={<VictoryLabel style={styles.legendaTexto} />}
-        />
+        <View style={styles.grafico}>
+          <VictoryPie
+            height={100}
+            colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+            data={data}
+          />
+        </View>
+        <View style={styles.legenda}>
+          <VictoryLegend
+            height={150}
+            colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+            data={data.map(item => ({ name: item.x }))}
+            labelComponent={<VictoryLabel style={styles.legendaTexto} />}
+          />
+        </View>
       </View>
 
       <Text style={styles.texto}> Salário: </Text>
@@ -83,7 +85,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: .8,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
   },
   graficoContainer: {
     flexDirection: 'row',
-    
+    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
   },
