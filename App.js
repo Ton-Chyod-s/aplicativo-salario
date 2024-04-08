@@ -1,20 +1,6 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react'
-import { Updates } from 'expo';
-import { VictoryPie } from 'victory-native';
-
-/*
-// Verifica se há atualizações disponíveis ao iniciar o aplicativo
-async function checkForUpdate() {
-  const update = await Updates.checkForUpdateAsync();
-  if (update.isAvailable) {
-    await Updates.fetchUpdateAsync();
-    // Se necessário, você pode adicionar um aviso ao usuário sobre a atualização
-    await Updates.reloadAsync();
-  }
-}
-
-checkForUpdate(); */
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { VictoryPie, VictoryLegend, VictoryLabel } from 'victory-native';
 
 export default function App() {
   const [valor, setValor] = useState("");
@@ -23,52 +9,73 @@ export default function App() {
   const [resultado2, setResultado2] = useState("");
   const [resultado3, setResultado3] = useState("");
 
-  async function Imprimir(){
+  const Imprimir = () => {
     fetch(`https://api-salario.cyclic.app/salario/${valor}`)
     .then(res => res.json())
     .then(data => {
-      setResultado(data['Despesas'])
-      setResultado1(data['Investimento'])
-      setResultado2(data['Fundo Emergencial'])
-      setResultado3(data['Pode gastar'])
-    })
+      setResultado(data['Despesas']);
+      setResultado1(data['Investimento']);
+      setResultado2(data['Fundo Emergencial']);
+      setResultado3(data['Pode gastar']);
+    });
   }
 
-  function Limpar() {
-    return setValor("")
+  const Limpar = () => {
+    setValor("");
   }
+
+  const data = [
+    { x: "Despesas", y: resultado },
+    { x: "Investimentos", y: resultado1 },
+    { x: "Fundo Emergencial", y: resultado2 },
+    { x: "Pode gastar à toa", y: resultado3 }
+  ];
 
   return (
     <View style={styles.container}>
-      <View style={styles.grafico}>
-      <VictoryPie
-        height={250}
-        colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED" ]}
-        data={[
-          { x: "Despesas", y: resultado },
-          { x: "Investimentos", y: resultado1 },
-          { x: "Fundo Emergêncial", y: resultado2 },
-          { x: "Pode gastar à toa", y: resultado3}
-        ]}
-      />
+      <View style={styles.graficoContainer}>
+        <VictoryPie
+          style={styles.grafico}
+          height={100}
+          colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+          data={data}
+        />
+        <VictoryLegend
+          height={150}
+          style={styles.legenda}
+          colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+          data={data.map(item => ({ name: item.x }))}
+          labelComponent={<VictoryLabel style={styles.legendaTexto} />}
+        />
       </View>
 
       <Text style={styles.texto}> Salário: </Text>
     
-      <TextInput value={valor} onChangeText={setValor} placeholder='Digite o valor!'/>
+      <TextInput 
+        style={styles.input}
+        value={valor} 
+        onChangeText={setValor} 
+        placeholder='Digite o valor!'
+      />
+
       <View style={styles.salario}>
         <TouchableOpacity style={styles.button} onPress={Imprimir} >
-          <Text style={styles.box_direita}>Calcular</Text>
+          <Text style={styles.buttonText}>Calcular</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={Limpar}>
-          <Text style={styles.box_direita}>Limpar</Text>
+          <Text style={styles.buttonText}>Limpar</Text>
         </TouchableOpacity>
       </View>
 
       <View>
         <Text style={styles.texto}>Resultado: </Text>
-        <Text style={styles.texto_resposta} >Despesas: {resultado}{'\n'}Investimentos: {resultado1}{'\n'}Fundo Emergêncial: {resultado2}{'\n'}Pode gastar à toa: {resultado3}</Text>
+        <Text style={styles.texto_resposta}>
+          Despesas: {resultado}{'\n'}
+          Investimentos: {resultado1}{'\n'}
+          Fundo Emergêncial: {resultado2}{'\n'}
+          Pode gastar à toa: {resultado3}
+        </Text>
       </View>
     </View>
   );
@@ -76,12 +83,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: .7,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   salario: {
     flexDirection: 'row',
+    marginTop: 10,
   },
   button: {
     margin: 5,
@@ -89,20 +98,44 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     borderRadius: 5,
   },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginTop: 10,
+  },
   texto: {
     color: 'black',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    marginTop: 10,
   },
   texto_resposta: {
     color: 'grey',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    marginTop: 10,
   },
-  box_direita: {
-    color: 'grey',
-    fontWeight: 'bold',
+  graficoContainer: {
+    flexDirection: 'row',
+    
+    alignItems: 'center',
+    marginTop: 20,
   },
   grafico: {
-    
-  }
+    marginRight: 20,
+  },
+  legenda: {
+    marginTop: 20,
+  },
+  legendaTexto: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black',
+  },
 });
