@@ -22,6 +22,10 @@ export default function App() {
 
   const Limpar = () => {
     setValor("");
+    setResultado("");
+    setResultado1("");
+    setResultado2("");
+    setResultado3("");
   }
 
   const data = [
@@ -36,7 +40,7 @@ export default function App() {
       <View style={styles.graficoContainer}>
         <View style={styles.grafico}>
           <VictoryPie
-            height={100}
+            height={250}
             colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
             data={data}
           />
