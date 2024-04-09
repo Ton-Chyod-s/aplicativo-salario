@@ -15,7 +15,10 @@
     "expo-updates": "^0.24.12",
     "react": "18.2.0",
     "react-native": "0.73.6",
-    "react-native-code-push": "^8.2.2"
+    "react-native-code-push": "^8.2.2",
+    "sequelize": "^6.37.2",
+    "sequelize-cli": "^6.6.2",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
