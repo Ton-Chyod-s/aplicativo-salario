@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { VictoryPie, VictoryLegend, VictoryLabel } from 'victory-native';
 
@@ -8,16 +8,24 @@ export default function App() {
   const [resultado1, setResultado1] = useState("");
   const [resultado2, setResultado2] = useState("");
   const [resultado3, setResultado3] = useState("");
+  const [dadosDisponiveis, setDadosDisponiveis] = useState(false);
+
+  useEffect(() => {
+    if (dadosDisponiveis) {
+      fetch(`https://api-salario.cyclic.app/salario/${valor}`)
+        .then(res => res.json())
+        .then(data => {
+          setResultado(data['Despesas']);
+          setResultado1(data['Investimento']);
+          setResultado2(data['Fundo Emergencial']);
+          setResultado3(data['Pode gastar']);
+        })
+        .catch(error => console.error('Erro ao buscar dados:', error));
+    }
+  }, [dadosDisponiveis, valor]);
 
   const Imprimir = () => {
-    fetch(`https://api-salario.cyclic.app/salario/${valor}`)
-    .then(res => res.json())
-    .then(data => {
-      setResultado(data['Despesas']);
-      setResultado1(data['Investimento']);
-      setResultado2(data['Fundo Emergencial']);
-      setResultado3(data['Pode gastar']);
-    });
+    setDadosDisponiveis(true);
   }
 
   const Limpar = () => {
@@ -26,6 +34,7 @@ export default function App() {
     setResultado1("");
     setResultado2("");
     setResultado3("");
+    setDadosDisponiveis(false);
   }
 
   const data = [
@@ -37,30 +46,32 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.graficoContainer}>
-        <View style={styles.grafico}>
-          <VictoryPie
-            height={250}
-            colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
-            data={data}
-          />
+      {dadosDisponiveis && (
+        <View style={styles.graficoLegendaContainer}>
+          <View style={styles.grafico}>
+            <VictoryPie
+              height={250}
+              colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+              data={data}
+            />
+          </View>
+          <View style={styles.legenda}>
+            <VictoryLegend
+              height={150}
+              colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
+              data={data.map(item => ({ name: item.x }))}
+              labelComponent={<VictoryLabel style={styles.legendaTexto} />}
+            />
+          </View>
         </View>
-        <View style={styles.legenda}>
-          <VictoryLegend
-            height={150}
-            colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
-            data={data.map(item => ({ name: item.x }))}
-            labelComponent={<VictoryLabel style={styles.legendaTexto} />}
-          />
-        </View>
-      </View>
+      )}
 
       <Text style={styles.texto}> Salário: </Text>
-    
-      <TextInput 
+
+      <TextInput
         style={styles.input}
-        value={valor} 
-        onChangeText={setValor} 
+        value={valor}
+        onChangeText={setValor}
         placeholder='Digite o valor!'
       />
 
@@ -74,15 +85,17 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <View>
-        <Text style={styles.texto}>Resultado: </Text>
-        <Text style={styles.texto_resposta}>
-          Despesas: {resultado}{'\n'}
-          Investimentos: {resultado1}{'\n'}
-          Fundo Emergêncial: {resultado2}{'\n'}
-          Pode gastar à toa: {resultado3}
-        </Text>
-      </View>
+      {dadosDisponiveis && (
+        <View>
+          <Text style={styles.texto}>Resultado: </Text>
+          <Text style={styles.texto_resposta}>
+            Despesas: {resultado}{'\n'}
+            Investimentos: {resultado1}{'\n'}
+            Fundo Emergêncial: {resultado2}{'\n'}
+            Pode gastar à toa: {resultado3}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -127,17 +140,15 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 10,
   },
-  graficoContainer: {
+  graficoLegendaContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 20,
   },
   grafico: {
     marginRight: 20,
   },
   legenda: {
-    marginTop: 20,
+    marginTop: 40,
   },
   legendaTexto: {
     fontSize: 14,
