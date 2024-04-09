@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { VictoryPie, VictoryLegend, VictoryLabel } from 'victory-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,  } from 'react-native';
+import { VictoryPie, VictoryLegend, VictoryLabel, VictoryLine } from 'victory-native';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   const [valor, setValor] = useState("");
@@ -46,13 +47,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
+      <View >
+        <Text style={styles.titulo}>Controle Salário</Text>
+      </View>
       {dadosDisponiveis && (
         <View style={styles.graficoLegendaContainer}>
           <View style={styles.grafico}>
             <VictoryPie
               height={250}
               colorScale={["#7D84B2", "#8E9DCC", "#D9DBF1", "#F9F9ED"]}
-              data={data}
+              labelComponent={null}
             />
           </View>
           <View style={styles.legenda}>
@@ -64,9 +69,10 @@ export default function App() {
             />
           </View>
         </View>
+        
       )}
 
-      <Text style={styles.texto}> Salário: </Text>
+      <Text style={styles.texto}> Moeda: </Text>
 
       <TextInput
         style={styles.input}
@@ -107,12 +113,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  titulo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 25,
+    marginTop: 10,
+  },
   salario: {
     flexDirection: 'row',
     marginTop: 10,
   },
   button: {
-    margin: 5,
+    margin: 10,
     padding: 10,
     backgroundColor: 'lightblue',
     borderRadius: 5,
@@ -145,10 +159,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   grafico: {
-    marginRight: 20,
+    marginRight: -80,
   },
   legenda: {
     marginTop: 40,
+    marginRight: -130
   },
   legendaTexto: {
     fontSize: 14,
