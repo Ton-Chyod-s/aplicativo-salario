@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,  } from 'react-native';
-import { VictoryPie, VictoryLegend, VictoryLabel, VictoryLine } from 'victory-native';
+import { VictoryPie, VictoryLegend, VictoryLabel } from 'victory-native';
 import { StatusBar } from 'expo-status-bar';
 import { main } from "/lib/BD.js";
 
